@@ -3,9 +3,38 @@
     <NuxtLink to="/">← Back to Catalog</NuxtLink>
     <div class="product-info">
       <img :src="product?.thumbnail" :alt="product?.title" />
-      <h1>{{ product?.title }}</h1>
-      <p>{{ product?.description }}</p>
-      <h2>{{ product?.price }} USD</h2>
+      <p>Price: {{ product?.price }} USD</p>
+      <p>Rating: {{ product?.rating }} ⭐</p>
+      <p>Category: {{ product?.category }}</p>
+      <p v-if="product?.discountPercentage">
+        Discount: {{ product?.discountPercentage }}%
+      </p>
+      <p v-if="product && product?.stock <= 0" class="out-of-stock">
+        Out of Stock
+      </p>
+      <p v-else>Stock: {{ product?.stock }}</p>
+      <p>Brand: {{ product?.brand }}</p>
+      <div class="tags">
+        Tags:
+        <span v-for="tag in product?.tags" :key="tag" class="tag">{{
+          tag
+        }}</span>
+      </div>
+
+      <h2>Reviews</h2>
+      <div v-if="product?.reviews.length === 0">No reviews yet.</div>
+      <div
+        v-else
+        v-for="review in product?.reviews"
+        :key="review.date"
+        class="review"
+      >
+        <p>
+          <strong>{{ review.reviewerName }}:</strong>
+          {{ review.comment }} (Rating: {{ review.rating }} ⭐)
+        </p>
+        <p>Date: {{ new Date(review.date).toLocaleDateString() }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -27,13 +56,4 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped lang="scss">
-.product-detail {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.product-info {
-  text-align: center;
-}
-</style>
+<style scoped lang="scss"></style>
