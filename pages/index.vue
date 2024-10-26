@@ -34,6 +34,10 @@
 <script lang="ts" setup>
 import { useProductStore } from "~/stores/productStore";
 
+useHead({
+  title: "Product Catalog",
+});
+
 const store = useProductStore();
 const products = computed(() => store.products);
 const loading = computed(() => store.loading);

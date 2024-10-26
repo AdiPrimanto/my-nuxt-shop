@@ -9,15 +9,18 @@
           <div class="product-info__desc">
             <h2 class="product-info__title">{{ product?.title }}</h2>
             <p class="product-info__price">{{ product?.price }} USD</p>
+            <p>{{ product?.description }}</p>
             <div class="product-info__information">
               <p>{{ product?.rating }} ⭐</p>
-              <p>{{ product?.stock }} tersisa</p>
-              <p
-                v-if="product?.discountPercentage"
-                class="product-info__discount"
-              >
-                {{ product?.discountPercentage }}%
-              </p>
+              <div class="product-info__information-detail">
+                <p>{{ product?.stock }} tersisa</p>
+                <p
+                  v-if="product?.discountPercentage"
+                  class="product-info__discount"
+                >
+                  {{ product?.discountPercentage }}%
+                </p>
+              </div>
             </div>
             <div class="tags">
               <span v-for="tag in product?.tags" :key="tag" class="tag">{{
@@ -63,6 +66,10 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import type { Product } from "~/types/product";
+
+useHead({
+  title: "Detail Product Catalog",
+});
 
 const route = useRoute();
 const product = ref<Product>();
