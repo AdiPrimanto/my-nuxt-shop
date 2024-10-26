@@ -2,7 +2,10 @@
   <div class="catalog">
     <h1>Product Catalog</h1>
 
-    <div v-if="loading">Loading products...</div>
+    <div v-if="loading" class="product-loading">
+      <div v-for="item in 5" class="skaleton"></div>
+    </div>
+
     <div v-else class="product-grid">
       <NuxtLink
         v-for="product in products"
@@ -11,20 +14,17 @@
       >
         <div class="product-card">
           <img :src="product.thumbnail" :alt="product.title" />
-          <h2>{{ product.title }}</h2>
-          <p>{{ product.price }} USD</p>
-          <p>Category: {{ product.category }}</p>
-          <p v-if="product.discountPercentage">
-            Discount: {{ product.discountPercentage }}%
-          </p>
-          <p v-if="product.stock <= 0" class="out-of-stock">Out of Stock</p>
-          <p v-else>Stock: {{ product.stock }}</p>
-          <p>
-            Tags:
-            <span v-for="tag in product.tags" :key="tag" class="tag">{{
-              tag
-            }}</span>
-          </p>
+          <div class="product-card__content">
+            <h2>{{ product.title }}</h2>
+            <p class="price">{{ product.price }} USD</p>
+
+            <div class="stock_wrapper">
+              <span class="stock">{{ product.stock }} Tersisa</span>
+              <span class="discount"
+                >Potongan hingga {{ product.discountPercentage }}%</span
+              >
+            </div>
+          </div>
         </div>
       </NuxtLink>
     </div>
